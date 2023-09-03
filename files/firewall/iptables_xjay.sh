@@ -87,7 +87,7 @@ ip6tables -t mangle -N XJAY6
 [ -n "$4" ] && ip6tables -t mangle -A XJAY6 -d $4 -j RETURN
 # bypass all private IPv6 addresses
 ip6tables -t mangle -A XJAY6 -d $PRIVATE_IP6 -j RETURN
-[ -n "$6" ] && ip6tables -t mangle -A XJAY6 -d $WAN_IP6_PREFIX_MASK -j RETURN
+[ -n "$6" ] && ip6tables -t mangle -A XJAY6 -d $6 -j RETURN
 ip6tables -t mangle -A XJAY6 -m iprange --dst-range $MULTICAST_IP6 -j RETURN
 # avoid traffic loop for the case of dns ptr queries
 ip6tables -t mangle -A XJAY6 -m mark --mark $2 -j RETURN
@@ -106,7 +106,7 @@ ip6tables -t mangle -N XJAY6_MASK
 # bypass all private IPv6 addresses
 ip6tables -t mangle -A XJAY6_MASK -d $PRIVATE_IP6 -j RETURN
 # bypass LAN IPv6 traffic
-[ -n "$6" ] && ip6tables -t mangle -A XJAY6_MASK -d $WAN_IP6_PREFIX_MASK -j RETURN
+[ -n "$6" ] && ip6tables -t mangle -A XJAY6_MASK -d $6 -j RETURN
 ip6tables -t mangle -A XJAY6_MASK -m iprange --dst-range $MULTICAST_IP6 -j RETURN
 # bypass xray IPv6 outbound traffic to avoid loop
 ip6tables -t mangle -A XJAY6_MASK -m mark --mark $2 -j RETURN
